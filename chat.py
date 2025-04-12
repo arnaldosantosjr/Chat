@@ -33,7 +33,11 @@ import flet as ft
 def main(page):
     #Crianddo elementos
     title = ft.Text("Webchat")
-    botton_iniciar = ft.ElevatedButton("Iniciar Chat")
+
+    #Criando o botão
+    def abrir_dialogo(evento):
+        print("Botão clicado")
+    botton_iniciar = ft.ElevatedButton("Iniciar Chat", on_click=abrir_dialogo)
 
     #Colocando os elementos na tela
     page.add(title)
