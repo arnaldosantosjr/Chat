@@ -1,3 +1,12 @@
+# sites / Sistemas / Aplicativos
+# Flask
+# Django
+# FastAPI
+# Flet -> Python -> visal (frontand) / logica (backend)
+# Kivy
+
+# Frameworks -> biblioteca com regras especificas
+
 # Criar o chat
 
 # Títulho: WebChat
@@ -14,3 +23,21 @@
                 # Botão: Enviar
                     # Quando clicar no botão:
                     # Enviar a mensagem para o chat
+
+
+#importando o flet
+import flet as ft
+
+
+# Criando a função principal
+def main(page):
+    #Crianddo elementos
+    title = ft.Text("Webchat")
+    botton_iniciar = ft.ElevatedButton("Iniciar Chat")
+
+    #Colocando os elementos na tela
+    page.add(title)
+    page.add(botton_iniciar)
+
+# Rodandar o aplicativo
+ft.app(main)
