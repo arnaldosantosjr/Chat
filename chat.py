@@ -1,47 +1,48 @@
-# sites / Sistemas / Aplicativos
-# Flask
-# Django
-# FastAPI
-# Flet -> Python -> visal (frontand) / logica (backend)
-# Kivy
 
-# Frameworks -> biblioteca com regras especificas
-
-# Criar o chat
-
-# Títulho: WebChat
-# Cotão: Iniciar Chat no botão
-    # Quando clicar no botão:
-    # - Criar uma nova janela/Dialog/Modal
-        # Título: Bem-vindo ao WebChat
-        # Campo de texto: Escreva seu nome no chat
-        # Botão: Enviar
-            #Clcou no botão:
-            # Fechar a janela/Dialog/Modal
-                # Criar  o chat
-                # Criar o campo de texto para o chat: Digite sua mensagem
-                # Botão: Enviar
-                    # Quando clicar no botão:
-                    # Enviar a mensagem para o chat
-
-
-#importando o flet
 import flet as ft
 
+def main(page: ft.Page):
+    page.title = "WebChat"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.theme_mode = ft.ThemeMode.DARK
 
-# Criando a função principal
-def main(page):
-    #Crianddo elementos
-    title = ft.Text("Webchat")
+    # Área onde as mensagens serão exibidas
+    chat = ft.Column()
+    
+    nome_usuario = ft.TextField(label="Seu nome")
 
-    #Criando o botão
-    def abrir_dialogo(evento):
-        print("Botão clicado")
-    botton_iniciar = ft.ElevatedButton("Iniciar Chat", on_click=abrir_dialogo)
+    campo_mensagem = ft.TextField(label="Digite sua mensagem", expand=True)
 
-    #Colocando os elementos na tela
-    page.add(title)
-    page.add(botton_iniciar)
+    def enviar_mensagem(e):
+        if nome_usuario.value and campo_mensagem.value:
+            nova_mensagem = ft.Text(f"{nome_usuario.value}: {campo_mensagem.value}")
+            chat.controls.append(nova_mensagem)
+            campo_mensagem.value = ""
+            page.update()
 
-# Rodandar o aplicativo
-ft.app(main)
+    botao_enviar = ft.ElevatedButton("Enviar", on_click=enviar_mensagem)
+
+    def entrar_chat(e):
+        if not nome_usuario.value:
+            page.dialog = ft.AlertDialog(title=ft.Text("Por favor, digite seu nome"))
+            page.dialog.open = True
+            page.update()
+            return
+
+        page.clean()  # limpa a tela
+        page.add(
+            ft.Text(f"Bem-vindo ao WebChat, {nome_usuario.value}!", size=20),
+            chat,
+            ft.Row([campo_mensagem, botao_enviar])
+        )
+
+    botao_entrar = ft.ElevatedButton("Entrar no Chat", on_click=entrar_chat)
+
+    page.add(
+        ft.Text("WebChat", size=30, weight="bold"),
+        nome_usuario,
+        botao_entrar
+    )
+
+# Rodar no navegador
+ft.app(target=main, view=ft.WEB_BROWSER)
